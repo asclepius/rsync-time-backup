@@ -1,9 +1,9 @@
 # Time machine style backups using rsync
 ## Description
 
-Time Machine style backups with rsync. Tested on Linux, but should 
-work on any platform since this script has no operating system or 
-file system specific dependencies like the original.
+Time Machine style backups with rsync. Tested on Linux, but should
+work on any platform since this script has no relevant operating
+system or file system specific dependencies like the original.
 
 ## Installation
 
@@ -38,6 +38,9 @@ Options:
   -k, --keep-expired
       do not delete expired backups until they can be reused by subsequent backups or
       the backup location runs out of space.
+
+  --ssh-opt <option>
+      pass options to ssh, e.g. '-p 22'
 
   -v, --verbose
       increase verbosity
@@ -83,12 +86,12 @@ Old backups are automatically expired and purged - default retention times see b
 marker file is also used as configuration file for backup retention times.
 
 ```
-RETENTION_WIN_ALL="$((4 * 3600))"        # within 4 hrs keep all backups
-RETENTION_WIN_01H="$((1 * 24 * 3600))"   # within 24 hrs keep 1 backup per hour
-RETENTION_WIN_04H="$((3 * 24 * 3600))"   # within 3 days keep 1 backup per 4 hours
-RETENTION_WIN_08H="$((14 * 24 * 3600))"  # within 2 weeks keep 1 backup per 8 hours
-RETENTION_WIN_24H="$((28 * 24 * 3600))"  # within 4 weeks keep 1 backup per day
-                                         # thereafter keep the most recent backup of each month
+RETENTION_WIN_ALL=$((4 * 3600))        # within 4 hrs keep all backups
+RETENTION_WIN_01H=$((1 * 24 * 3600))   # within 24 hrs keep 1 backup per hour
+RETENTION_WIN_04H=$((3 * 24 * 3600))   # within 3 days keep 1 backup per 4 hours
+RETENTION_WIN_08H=$((14 * 24 * 3600))  # within 2 weeks keep 1 backup per 8 hours
+RETENTION_WIN_24H=$((28 * 24 * 3600))  # within 4 weeks keep 1 backup per day
+                                       # thereafter keep the most recent backup of each month
 ```
 
 ## Features
@@ -118,6 +121,11 @@ RETENTION_WIN_24H="$((28 * 24 * 3600))"  # within 4 weeks keep 1 backup per day
 
 ## Issues
 
+### date command
+
+The `date` command exists in different flavors. Please check that your operating system
+is properly supported in the `fn_parse_date` function.
+
 ### remote shell
 
 Shells like csh/tcsh have known issues with multiple line quoting. If you are
@@ -129,7 +137,6 @@ side is set to either bash or sh.
 The MIT License (MIT)
 
 Copyright (c) 2013-2014 Laurent Cozic  
-Copyright (c) 2015 eaut
 Copyright (c) 2015 asclepius
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
